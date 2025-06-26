@@ -1,6 +1,4 @@
-# Create the complete page.tsx file for the medical directory
-page_content = '''import React from 'react';
-import { Star, MapPin, Phone, Mail, Shield, CheckCircle, Users, Award } from 'lucide-react';
+import React from 'react';
 
 // TypeScript interfaces for type safety
 interface Practitioner {
@@ -12,17 +10,10 @@ interface Practitioner {
   rating: number;
   reviewCount: number;
   verified: boolean;
-  image: string;
   phone: string;
   email: string;
   experience: string;
   acceptingPatients: boolean;
-}
-
-interface TrustSignal {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
 }
 
 // Placeholder practitioner data
@@ -36,7 +27,6 @@ const featuredPractitioners: Practitioner[] = [
     rating: 4.9,
     reviewCount: 127,
     verified: true,
-    image: '/api/placeholder/150/150',
     phone: '(215) 555-0123',
     email: 'dr.mitchell@example.com',
     experience: '15+ years',
@@ -51,7 +41,6 @@ const featuredPractitioners: Practitioner[] = [
     rating: 4.8,
     reviewCount: 89,
     verified: true,
-    image: '/api/placeholder/150/150',
     phone: '(412) 555-0456',
     email: 'dr.chen@example.com',
     experience: '12+ years',
@@ -66,30 +55,10 @@ const featuredPractitioners: Practitioner[] = [
     rating: 4.9,
     reviewCount: 156,
     verified: true,
-    image: '/api/placeholder/150/150',
     phone: '(717) 555-0789',
     email: 'dr.rodriguez@example.com',
     experience: '18+ years',
     acceptingPatients: false
-  }
-];
-
-// Trust signals data
-const trustSignals: TrustSignal[] = [
-  {
-    icon: <Shield className="w-8 h-8 text-blue-600" />,
-    title: 'Verified Practitioners',
-    description: 'All practitioners are licensed and verified medical professionals'
-  },
-  {
-    icon: <Award className="w-8 h-8 text-green-600" />,
-    title: 'Specialized Training',
-    description: 'Expertise in ketogenic and carnivore dietary interventions'
-  },
-  {
-    icon: <Users className="w-8 h-8 text-blue-600" />,
-    title: 'Patient-Centered Care',
-    description: 'Focused on personalized metabolic health solutions'
   }
 ];
 
@@ -157,19 +126,41 @@ export default function HomePage() {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {trustSignals.map((signal, index) => (
-              <div key={index} className="text-center p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
-                <div className="flex justify-center mb-4">
-                  {signal.icon}
-                </div>
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                  {signal.title}
-                </h4>
-                <p className="text-gray-600">
-                  {signal.description}
-                </p>
+            <div className="text-center p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🛡️</span>
               </div>
-            ))}
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                Verified Practitioners
+              </h4>
+              <p className="text-gray-600">
+                All practitioners are licensed and verified medical professionals
+              </p>
+            </div>
+            
+            <div className="text-center p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🏆</span>
+              </div>
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                Specialized Training
+              </h4>
+              <p className="text-gray-600">
+                Expertise in ketogenic and carnivore dietary interventions
+              </p>
+            </div>
+            
+            <div className="text-center p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">👥</span>
+              </div>
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                Patient-Centered Care
+              </h4>
+              <p className="text-gray-600">
+                Focused on personalized metabolic health solutions
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -192,16 +183,16 @@ export default function HomePage() {
                 {/* Practitioner Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center">
-                    <img 
-                      src={practitioner.image} 
-                      alt={practitioner.name}
-                      className="w-16 h-16 rounded-full object-cover mr-4"
-                    />
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-xl font-bold text-blue-600">
+                        {practitioner.name.split(' ')[1]?.[0]}{practitioner.name.split(' ')[2]?.[0]}
+                      </span>
+                    </div>
                     <div>
                       <h4 className="text-lg font-semibold text-gray-900 flex items-center">
                         {practitioner.name}
                         {practitioner.verified && (
-                          <CheckCircle className="w-5 h-5 text-blue-600 ml-2" />
+                          <span className="ml-2 text-blue-600">✓</span>
                         )}
                       </h4>
                       <p className="text-sm text-gray-600">{practitioner.title}</p>
@@ -212,7 +203,7 @@ export default function HomePage() {
                 {/* Rating and Location */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
-                    <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                    <span className="text-yellow-400">⭐</span>
                     <span className="text-sm font-medium text-gray-900 ml-1">
                       {practitioner.rating}
                     </span>
@@ -221,7 +212,7 @@ export default function HomePage() {
                     </span>
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
-                    <MapPin className="w-4 h-4 mr-1" />
+                    <span className="mr-1">📍</span>
                     {practitioner.location}
                   </div>
                 </div>
@@ -258,10 +249,10 @@ export default function HomePage() {
                     View Profile
                   </button>
                   <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                    <Phone className="w-4 h-4 text-gray-600" />
+                    📞
                   </button>
                   <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                    <Mail className="w-4 h-4 text-gray-600" />
+                    ✉️
                   </button>
                 </div>
               </div>
@@ -339,27 +330,4 @@ export default function HomePage() {
       </footer>
     </div>
   );
-}'''
-
-# Write the file
-with open('page.tsx', 'w') as f:
-    f.write(page_content)
-
-print("✅ Professional medical directory homepage created successfully!")
-print("\n📁 File: page.tsx")
-print("📏 Size:", len(page_content), "characters")
-print("\n🏥 Features included:")
-print("- Professional medical color scheme (blues, greens, whites)")
-print("- Hero section with clear value proposition")
-print("- Trust signals with verification badges")
-print("- Featured practitioners with placeholder data")
-print("- Mobile-responsive design with Tailwind CSS")
-print("- TypeScript interfaces for type safety")
-print("- Accessibility-compliant structure")
-print("- Call-to-action sections")
-print("- Professional footer")
-print("\n🔧 Next steps:")
-print("1. Replace src/app/page.tsx with this content")
-print("2. Install lucide-react icons: npm install lucide-react")
-print("3. Add placeholder images or replace with actual practitioner photos")
-print("4. Customize colors and content as needed")
+}
